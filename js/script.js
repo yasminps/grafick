@@ -13,34 +13,35 @@ const products = {
   agendas: {
     badge: "Agenda",
     items: [
-      { file: "agenda 9.jpeg", title: "Agenda Monique", desc: "Capa floral aquarelada com detalhes dourados e nome em destaque." },
-      { file: "agenda 8.jpeg", title: "Agenda Alexandre", desc: "Estampa moderna holográfica com detalhe em laranja." },
-      { file: "agenda 7.jpeg", title: "Agenda Fran", desc: "Efeito mármore colorido com assinatura personalizada." },
-      { file: "agenda 5.jpeg", title: "Agenda Heloise", desc: "Capa elegante em tons vinho e dourado, com inicial do nome." },
-      { file: "agenda 3.jpeg", title: "Agenda Brenda", desc: "Arte floral delicada em azul e rosa, nome em destaque." },
-      { file: "agenda 2.jpeg", title: "Agenda Profissional", desc: "Capa personalizada para profissionais, com nome e área de atuação." },
-      { file: "agenda 4.jpeg", title: "Agenda de Viagens", desc: "Agenda temática personalizada para empresas e uso pessoal." },
-      { file: "agenda 6.jpeg", title: "Kit Bíblia + Caderno de Oração", desc: "Conjunto personalizado floral com nome bordado na capa." },
-      { file: "agenda 1.jpeg", title: "Agenda Corporativa", desc: "Impressão personalizada de capas para empresas e eventos." },
+      { file: "agenda 1.png", title: "Adria Doces" },
+      { file: "agenda 2.png", title: "Heloise" },
+      { file: "agenda 3.png", title: "Elisângela" },
+      { file: "agenda 4.png", title: "Desbravar Viagens" },
+      { file: "agenda 5.png", title: "Alexandre" },
+      { file: "agenda 6.png", title: "Monique" },
+      { file: "kit.png", title: "Kit Completo" },
     ],
   },
   cadernetas: {
     badge: "Caderneta",
     items: [
-      { file: "Caderneta 1.jpeg", title: "Caderneta de Saúde — Bebê", desc: "Registro do bebê personalizado com foto, nome e dados de nascimento." },
-      { file: "Carderneta 3.jpeg", title: "Caderneta de Saúde — Recém-nascido", desc: "Capa com foto do bebê, nome e dados de nascimento em destaque." },
-      { file: "Carderneta 2.jpeg", title: "Caderneta de Saúde", desc: "Capa floral personalizada com o nome e chaveirinho combinando." },
-      { file: "Carderneta 4.jpeg", title: "Caderneta de Saúde Infantil", desc: "Tema infantil personalizado com nome e ilustração exclusiva." },
-      { file: "Carderneta 5.jpeg", title: "Caderneta de Gestante", desc: "Capa delicada para acompanhar cada etapa da gestação, com nome da mamãe." },
+      { file: "cardeneta 1.png", title: "Allice" },
+      { file: "cardeneta 2.png", title: "Isaac" },
+      { file: "cardeneta 3.png", title: "Lily de Paula" },
+      { file: "cardeneta 4.png", title: "José Leonardo" },
+      { file: "cardeneta 5.png", title: "Jairon América" },
+      { file: "cardeneta 6.png", title: "Asafe" },
     ],
   },
   biblias: {
     badge: "Bíblia",
     items: [
-      { file: "Biblia 3.jpeg", title: "Bíblia Sagrada Personalizada", desc: "Capa rosa floral com ilustração exclusiva e nome em destaque." },
-      { file: "Biblia 2.jpeg", title: "Bíblia Sagrada Personalizada", desc: "Capa delicada com fecho decorativo \"Fé\" e fita marcadora." },
-      { file: "Biblia 4.jpeg", title: "Bíblia Sagrada Personalizada", desc: "Capa floral clássica com nome em caligrafia e cantoneiras douradas." },
-      { file: "Biblia 1.jpeg", title: "Bíblia Sagrada Personalizada", desc: "Arte exclusiva com acabamento premium e nome do dono(a)." },
+      { file: "biblia 1.png", title: "Eudes" },
+      { file: "biblia 2.png", title: "Nayane" },
+      { file: "biblia 3.png", title: "Valentina" },
+      { file: "biblia 4.png", title: "Dinai Macedo" },
+      { file: "biblia 5.png", title: "Luiza Xavier" },
+      { file: "biblia 6.png", title: "Thayná Lima" },
     ],
   },
 };
@@ -51,20 +52,22 @@ function renderGrid(sectionId, gridId) {
   if (!grid || !data) return;
 
   grid.innerHTML = data.items
-    .map(
-      (item) => `
+    .map((item) => {
+      const fullTitle = `${data.badge} — ${item.title}`;
+      return `
         <div class="card">
-          <div class="card-media" data-full="${img(item.file)}" data-title="${item.title}">
+          <div class="card-media" data-full="${img(item.file)}" data-title="${fullTitle}" data-category="${sectionId}">
             <span class="card-badge">${data.badge}</span>
-            <img src="${img(item.file)}" alt="${item.title}" loading="lazy">
+            <img src="${img(item.file)}" alt="${fullTitle}" loading="lazy">
+            <div class="card-caption">
+              <h3>${item.title}</h3>
+              <button type="button" class="card-order-btn" data-title="${fullTitle}" data-img="${img(item.file)}" data-category="${sectionId}" aria-label="Personalizar ${fullTitle}">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+              </button>
+            </div>
           </div>
-          <div class="card-body">
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
-            <button type="button" class="card-link" data-title="${item.title}" data-img="${img(item.file)}">Quero personalizar →</button>
-          </div>
-        </div>`
-    )
+        </div>`;
+    })
     .join("");
 }
 
@@ -120,11 +123,12 @@ document.body.appendChild(lightbox);
 const lightboxImg = lightbox.querySelector("img");
 const lightboxOrderBtn = lightbox.querySelector(".lightbox-order");
 
-function openLightbox(fullSrc, title) {
+function openLightbox(fullSrc, title, category) {
   lightboxImg.src = fullSrc;
   lightboxImg.alt = title;
   lightboxOrderBtn.dataset.title = title;
   lightboxOrderBtn.dataset.img = fullSrc;
+  lightboxOrderBtn.dataset.category = category || "";
   lightbox.classList.add("active");
 }
 function closeLightbox() {
@@ -139,15 +143,17 @@ const orderForm = document.getElementById("orderForm");
 const fieldNome = document.getElementById("fieldNome");
 const fieldDesc = document.getElementById("fieldDesc");
 const fieldQtd = document.getElementById("fieldQtd");
+const modalFormats = document.getElementById("modalFormats");
 let currentProduct = null;
 
-function openOrderModal(title, imgSrc) {
+function openOrderModal(title, imgSrc, category) {
   currentProduct = { title, imgSrc };
   modalImg.src = imgSrc;
   modalImg.alt = title;
   modalTitle.textContent = title;
   orderForm.reset();
   fieldQtd.value = 1;
+  modalFormats.hidden = category !== "agendas";
   orderModal.classList.add("active");
   closeLightbox();
   setTimeout(() => fieldNome.focus(), 100);
@@ -164,11 +170,14 @@ orderForm.addEventListener("submit", (e) => {
   const nome = fieldNome.value.trim();
   const desc = fieldDesc.value.trim();
   const qtd = fieldQtd.value || "1";
+  const formatoInput = orderForm.querySelector('input[name="formato"]:checked');
+  const formato = !modalFormats.hidden && formatoInput ? formatoInput.value : null;
 
   const message = [
     "Olá! Vim pelo site da Grafick e quero fazer um pedido personalizado 😊",
     "",
     `Produto: ${currentProduct.title}`,
+    ...(formato ? [`Formato: ${formato}`] : []),
     `Nome para personalização: ${nome}`,
     `Como eu quero: ${desc}`,
     `Quantidade: ${qtd}`,
@@ -178,17 +187,20 @@ orderForm.addEventListener("submit", (e) => {
   closeOrderModal();
 });
 
-// Delegated clicks: card media (zoom), order buttons, closes
+// Delegated clicks: order buttons, card media (zoom), closes
 document.addEventListener("click", (e) => {
-  const media = e.target.closest(".card-media");
-  if (media) {
-    openLightbox(media.dataset.full, media.dataset.title);
+  // Order buttons are checked first because .card-order-btn now sits
+  // inside .card-media (catalog caption overlay) — checking media first
+  // would swallow the click and open the lightbox instead of the modal.
+  const orderTrigger = e.target.closest(".card-link, .lightbox-order, .card-order-btn");
+  if (orderTrigger) {
+    openOrderModal(orderTrigger.dataset.title, orderTrigger.dataset.img, orderTrigger.dataset.category);
     return;
   }
 
-  const orderTrigger = e.target.closest(".card-link, .lightbox-order");
-  if (orderTrigger) {
-    openOrderModal(orderTrigger.dataset.title, orderTrigger.dataset.img);
+  const media = e.target.closest(".card-media");
+  if (media) {
+    openLightbox(media.dataset.full, media.dataset.title, media.dataset.category);
     return;
   }
 
