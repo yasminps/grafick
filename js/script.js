@@ -44,6 +44,19 @@ const products = {
       { file: "biblia 6.png", title: "Thayná Lima" },
     ],
   },
+  chaveiros: {
+    badge: "Personalizado",
+    items: [
+      { file: "chaveiro 3.png", title: "Val Soares", badge: "Chaveiro" },
+      { file: "chaveiro 2.png", title: "Theo Garcia", badge: "Chaveiro" },
+      { file: "chaveiro 4.png", title: "Dávilla Garcês", badge: "Chaveiro" },
+      { file: "chaveiro 1.png", title: "Turma", badge: "Chaveiro" },
+      { file: "button 4.png", title: "Em Família", badge: "Button" },
+      { file: "button 3.png", title: "Emanuella", badge: "Button" },
+      { file: "button 1.png", title: "Comunhão em Ação", badge: "Button" },
+      { file: "button 2.png", title: "Saúde na Escola", badge: "Button" },
+    ],
+  },
 };
 
 function renderGrid(sectionId, gridId) {
@@ -53,11 +66,12 @@ function renderGrid(sectionId, gridId) {
 
   grid.innerHTML = data.items
     .map((item) => {
-      const fullTitle = `${data.badge} — ${item.title}`;
+      const badge = item.badge || data.badge;
+      const fullTitle = `${badge} — ${item.title}`;
       return `
         <div class="card">
           <div class="card-media" data-full="${img(item.file)}" data-title="${fullTitle}" data-category="${sectionId}">
-            <span class="card-badge">${data.badge}</span>
+            <span class="card-badge">${badge}</span>
             <img src="${img(item.file)}" alt="${fullTitle}" loading="lazy">
             <div class="card-caption">
               <h3>${item.title}</h3>
@@ -74,6 +88,7 @@ function renderGrid(sectionId, gridId) {
 renderGrid("agendas", "grid-agendas");
 renderGrid("cadernetas", "grid-cadernetas");
 renderGrid("biblias", "grid-biblias");
+renderGrid("chaveiros", "grid-chaveiros");
 
 // Mobile menu
 const menuToggle = document.getElementById("menuToggle");
