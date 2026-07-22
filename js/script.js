@@ -20,6 +20,7 @@ const products = {
       { file: "agenda 5.png", title: "Alexandre" },
       { file: "agenda 6.png", title: "Monique" },
       { file: "kit.png", title: "Kit Completo" },
+      { file: "agenda 7.png", title: "Laurenice" },
     ],
   },
   cadernetas: {
