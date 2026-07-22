@@ -190,7 +190,7 @@ orderForm.addEventListener("submit", (e) => {
   const formato = !modalFormats.hidden && formatoInput ? formatoInput.value : null;
 
   const message = [
-    "Olá! Vim pelo site da Grafick e quero fazer um pedido personalizado 😊",
+    "Olá! Vim pelo site da Grafick e quero fazer um pedido personalizado.",
     "",
     `Produto: ${currentProduct.title}`,
     ...(formato ? [`Formato: ${formato}`] : []),
