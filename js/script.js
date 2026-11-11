@@ -91,30 +91,8 @@ renderGrid("cadernetas", "grid-cadernetas");
 renderGrid("biblias", "grid-biblias");
 renderGrid("chaveiros", "grid-chaveiros");
 
-// Mobile menu
-const menuToggle = document.getElementById("menuToggle");
-const nav = document.getElementById("nav");
-menuToggle.addEventListener("click", () => {
-  nav.classList.toggle("open");
-});
-nav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => nav.classList.remove("open"));
-});
-
-// Search (filtra produtos em destaque + catálogo completo pelo nome)
-const searchToggle = document.getElementById("searchToggle");
-const searchBar = document.getElementById("searchBar");
+// Busca no catálogo existente
 const searchInput = document.getElementById("searchInput");
-
-searchToggle.addEventListener("click", () => {
-  searchBar.classList.toggle("active");
-  if (searchBar.classList.contains("active")) {
-    searchInput.focus();
-  } else {
-    searchInput.value = "";
-    filterProducts("");
-  }
-});
 
 function filterProducts(query) {
   const q = query.trim().toLowerCase();
